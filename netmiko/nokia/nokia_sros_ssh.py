@@ -256,7 +256,7 @@ class NokiaSrosFileTransfer(BaseFileTransfer):
 
     def process_md5(self, md5_output, pattern=r"=\s+(\S+)"):
         """ Nokia SROS does not support a md5sum calculation."""
-        raise ValueError("SR-OS does not support an MD5-hash operation.")
+        raise NotImplementedError("SR-OS does not support an MD5-hash operation.")
 
     def verify_file(self):
         """Verify the file has been transferred correctly based on filesize."""

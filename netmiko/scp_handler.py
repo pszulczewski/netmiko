@@ -88,7 +88,10 @@ class BaseFileTransfer(object):
             self.source_md5 = self.file_md5(source_file)
             self.file_size = os.stat(source_file).st_size
         elif direction == "get":
-            self.source_md5 = self.remote_md5(remote_file=source_file)
+            try:
+                self.source_md5 = self.remote_md5(remote_file=source_file)
+            except NotImplementedError:
+                self.source_md5 = None
             self.file_size = self.remote_file_size(remote_file=source_file)
         else:
             raise ValueError("Invalid direction specified")
