@@ -93,7 +93,10 @@ class NokiaSrosSSH(BaseConnection):
                 output += self._discard()
             cmd = "quit-config"
             self.write_channel(self.normalize_cmd(cmd))
-            output += self.read_until_pattern(pattern=re.escape(cmd))
+            if self.global_cmd_verify is not False:
+                output += self.read_until_pattern(pattern=re.escape(cmd))
+            else:
+                output += self.read_until_prompt()
         if self.check_config_mode():
             raise ValueError("Failed to exit configuration mode")
         return output
@@ -128,16 +131,25 @@ class NokiaSrosSSH(BaseConnection):
             log.info("Apply uncommitted changes!")
             cmd = "commit"
             self.write_channel(self.normalize_cmd(cmd))
-            output += self.read_until_pattern(pattern=re.escape(cmd))
-            output += self.read_until_pattern(r"@")
+            new_output = ""
+            if self.global_cmd_verify is not False:
+                new_output += self.read_until_pattern(pattern=re.escape(cmd))
+            if "@" not in new_output:
+                new_output += self.read_until_pattern(r"@")
+            output += new_output
         return output
 
     def _exit_all(self):
         """Return to the 'root' context."""
+        output = ""
         exit_cmd = "exit all"
         self.write_channel(self.normalize_cmd(exit_cmd))
         # Make sure you read until you detect the command echo (avoid getting out of sync)
-        return self.read_until_pattern(pattern=re.escape(exit_cmd))
+        if self.global_cmd_verify is not False:
+            output += self.read_until_pattern(pattern=re.escape(exit_cmd))
+        else:
+            output += self.read_until_prompt()
+        return output
 
     def _discard(self):
         """Discard changes from private candidate for Nokia SR OS"""
@@ -145,7 +157,9 @@ class NokiaSrosSSH(BaseConnection):
         if "@" in self.base_prompt:
             cmd = "discard"
             self.write_channel(self.normalize_cmd(cmd))
-            new_output = self.read_until_pattern(pattern=re.escape(cmd))
+            new_output = ""
+            if self.global_cmd_verify is not False:
+                new_output += self.read_until_pattern(pattern=re.escape(cmd))
             if "@" not in new_output:
                 new_output += self.read_until_prompt()
             output += new_output

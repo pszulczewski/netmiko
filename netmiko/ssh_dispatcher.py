@@ -31,6 +31,7 @@ from netmiko.dell import DellOS10SSH, DellOS10FileTransfer
 from netmiko.dell import DellPowerConnectSSH
 from netmiko.dell import DellPowerConnectTelnet
 from netmiko.dell import DellIsilonSSH
+from netmiko.dlink import DlinkDSTelnet, DlinkDSSSH
 from netmiko.eltex import EltexSSH, EltexEsrSSH
 from netmiko.endace import EndaceSSH
 from netmiko.enterasys import EnterasysSSH
@@ -49,6 +50,7 @@ from netmiko.flexvnf import FlexvnfSSH
 from netmiko.fortinet import FortinetSSH
 from netmiko.hp import HPProcurveSSH, HPProcurveTelnet, HPComwareSSH, HPComwareTelnet
 from netmiko.huawei import HuaweiSSH, HuaweiVrpv8SSH, HuaweiTelnet
+from netmiko.huawei import HuaweiSmartAXSSH
 from netmiko.ipinfusion import IpInfusionOcNOSSSH, IpInfusionOcNOSTelnet
 from netmiko.juniper import JuniperSSH, JuniperTelnet, JuniperScreenOsSSH
 from netmiko.juniper import JuniperFileTransfer
@@ -72,9 +74,11 @@ from netmiko.rad import RadETXTelnet
 from netmiko.ruckus import RuckusFastironSSH
 from netmiko.ruckus import RuckusFastironTelnet
 from netmiko.ruijie import RuijieOSSSH, RuijieOSTelnet
+from netmiko.sophos import SophosSfosSSH
 from netmiko.terminal_server import TerminalServerSSH
 from netmiko.terminal_server import TerminalServerTelnet
 from netmiko.ubiquiti import UbiquitiEdgeSSH
+from netmiko.ubiquiti import UbiquitiUnifiSwitchSSH
 from netmiko.vyos import VyOSSSH
 from netmiko.watchguard import WatchguardFirewareSSH
 
@@ -115,6 +119,7 @@ CLASS_MAPPER_BASE = {
     "dell_os10": DellOS10SSH,
     "dell_powerconnect": DellPowerConnectSSH,
     "dell_isilon": DellIsilonSSH,
+    "dlink_ds": DlinkDSSSH,
     "endace": EndaceSSH,
     "eltex": EltexSSH,
     "eltex_esr": EltexEsrSSH,
@@ -137,6 +142,8 @@ CLASS_MAPPER_BASE = {
     "hp_comware": HPComwareSSH,
     "hp_procurve": HPProcurveSSH,
     "huawei": HuaweiSSH,
+    "huawei_smartax": HuaweiSmartAXSSH,
+    "huawei_olt": HuaweiSmartAXSSH,
     "huawei_vrpv8": HuaweiVrpv8SSH,
     "ipinfusion_ocnos": IpInfusionOcNOSSSH,
     "juniper": JuniperSSH,
@@ -162,8 +169,10 @@ CLASS_MAPPER_BASE = {
     "rad_etx": RadETXSSH,
     "ruckus_fastiron": RuckusFastironSSH,
     "ruijie_os": RuijieOSSSH,
+    "sophos_sfos": SophosSfosSSH,
     "ubiquiti_edge": UbiquitiEdgeSSH,
     "ubiquiti_edgeswitch": UbiquitiEdgeSSH,
+    "ubiquiti_unifiswitch": UbiquitiUnifiSwitchSSH,
     "vyatta_vyos": VyOSSSH,
     "vyos": VyOSSSH,
     "watchguard_fireware": WatchguardFirewareSSH,
@@ -209,6 +218,7 @@ CLASS_MAPPER["cisco_ios_telnet"] = CiscoIosTelnet
 CLASS_MAPPER["cisco_xr_telnet"] = CiscoXrTelnet
 CLASS_MAPPER["dell_dnos6_telnet"] = DellDNOS6Telnet
 CLASS_MAPPER["dell_powerconnect_telnet"] = DellPowerConnectTelnet
+CLASS_MAPPER["dlink_ds_telnet"] = DlinkDSTelnet
 CLASS_MAPPER["extreme_telnet"] = ExtremeExosTelnet
 CLASS_MAPPER["extreme_exos_telnet"] = ExtremeExosTelnet
 CLASS_MAPPER["extreme_netiron_telnet"] = ExtremeNetironTelnet
@@ -216,6 +226,7 @@ CLASS_MAPPER["generic_termserver_telnet"] = TerminalServerTelnet
 CLASS_MAPPER["hp_procurve_telnet"] = HPProcurveTelnet
 CLASS_MAPPER["hp_comware_telnet"] = HPComwareTelnet
 CLASS_MAPPER["huawei_telnet"] = HuaweiTelnet
+CLASS_MAPPER["huawei_olt_telnet"] = HuaweiSmartAXSSH
 CLASS_MAPPER["ipinfusion_ocnos_telnet"] = IpInfusionOcNOSTelnet
 CLASS_MAPPER["juniper_junos_telnet"] = JuniperTelnet
 CLASS_MAPPER["paloalto_panos_telnet"] = PaloAltoPanosTelnet
